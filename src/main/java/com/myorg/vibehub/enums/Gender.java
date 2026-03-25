@@ -1,5 +1,5 @@
 package com.myorg.vibehub.enums;
 
-public enum gender {
+public enum Gender {
     MALE,FEMALE,TRANSGENDER,OTHER
 }

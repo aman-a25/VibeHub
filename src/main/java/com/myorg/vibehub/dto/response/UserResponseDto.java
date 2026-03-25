@@ -1,6 +1,6 @@
 package com.myorg.vibehub.dto.response;
 
-import com.myorg.vibehub.enums.gender;
+import com.myorg.vibehub.enums.Gender;
 import lombok.Data;
 
 @Data
@@ -12,5 +12,5 @@ public class UserResponseDto {
     private String userName;
     private String email;
     private String phoneNumber;
-    private gender gender;
+    private Gender gender;
 }

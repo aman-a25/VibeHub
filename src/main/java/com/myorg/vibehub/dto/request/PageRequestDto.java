@@ -1,10 +1,8 @@
 package com.myorg.vibehub.dto.request;
 
 import com.myorg.vibehub.enums.PageCatagory;
-import com.myorg.vibehub.enums.gender;
 import lombok.Data;
 
-import java.util.Date;
 @Data
 public class PageRequestDto {
 
