@@ -4,6 +4,7 @@ import com.myorg.vibehub.dto.request.PageRequestDto;
 import com.myorg.vibehub.dto.response.GenericResponseDto;
 import com.myorg.vibehub.dto.response.PageResponseDto;
 import com.myorg.vibehub.model.SocialMediaPage;
+import com.myorg.vibehub.repository.PageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,18 +22,24 @@ public class PageServiceImplement implements PageService {
 
         SocialMediaPage socialMediaPage =mapPageRequestDtoToPage(pageRequestDto);
         socialMediaPage.setCreatedDate(Instant.now());
-        return mapPageToPageResponseDto(pageRepository.addPage(socialMediaPage));
+        return mapPageToPageResponseDto(pageRepository.save(socialMediaPage));
 
     }
 
     @Override
     public PageResponseDto getPageById(Long id) {
-        return mapPageToPageResponseDto(pageRepository.getPage(id));
+
+        SocialMediaPage socialMediaPage = pageRepository.findById(id).orElse(null);
+
+        if (socialMediaPage == null) {
+            return null;
+        }
+        return mapPageToPageResponseDto(socialMediaPage);
     }
 
     @Override
     public List<PageResponseDto> getAllPage() {
-        List<SocialMediaPage>  socialMediaPageList = pageRepository.getAllSocialMediaPage();
+        List<SocialMediaPage>  socialMediaPageList = pageRepository.findAll();
 
         List<PageResponseDto> pageResponseDtoList = new LinkedList<>();
         for(SocialMediaPage page : socialMediaPageList){
@@ -45,18 +52,18 @@ public class PageServiceImplement implements PageService {
     public PageResponseDto updatePage(Long id, PageRequestDto pageRequestDto) {
         SocialMediaPage socialMediaPage = mapPageRequestDtoToPage(pageRequestDto);
         socialMediaPage.setId(id);
-        return mapPageToPageResponseDto(pageRepository.updatePage(socialMediaPage));
+        return mapPageToPageResponseDto(pageRepository.save(socialMediaPage));
     }
 
     @Override
     public GenericResponseDto removePageById(Long id) {
 
-        SocialMediaPage socialMediaPage = pageRepository.getPage(id);
+        SocialMediaPage socialMediaPage = pageRepository.findById(id).orElse(null);
         GenericResponseDto genericResponseDto = new GenericResponseDto();
 
         if (socialMediaPage != null) {
 
-            pageRepository.removePage(id);
+            pageRepository.delete(socialMediaPage);
 
             genericResponseDto.setSuccess(true);
             genericResponseDto.setMessage("Remove page successfully");
