@@ -6,23 +6,22 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "USERS")
+@Table(name = "users") //But here it is because the name of the class is User and the name of the table is Users (plural)
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @Column(name = "USER_NAME" , unique = true)
+    @Column(unique = true)
     private String userName;
     private String password;
     private String email;
-    @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-//    All the code below is actually the getter setters for the above data members but we don't need these Gator setters because we are using project lomblk'
+//    All the code below is actually the getter setters for the above data members, but we don't need these Gator setters because we are using project lombok'
 //
 //    public Long getId() {
 //        return id;

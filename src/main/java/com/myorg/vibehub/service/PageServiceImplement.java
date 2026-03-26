@@ -4,7 +4,6 @@ import com.myorg.vibehub.dto.request.PageRequestDto;
 import com.myorg.vibehub.dto.response.GenericResponseDto;
 import com.myorg.vibehub.dto.response.PageResponseDto;
 import com.myorg.vibehub.model.SocialMediaPage;
-import com.myorg.vibehub.repository.PageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
