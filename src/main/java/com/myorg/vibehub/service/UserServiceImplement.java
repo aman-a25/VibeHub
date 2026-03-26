@@ -23,7 +23,7 @@ public class UserServiceImplement implements UserService {
         User user = mapUserRequestDtoToUser(userRequestDto);
         user.setId(id);
 
-        User savedUser = userRepository.updateUser(user);
+        User savedUser = userRepository.save(user);
 
         return mapUserToUserResponseDto(savedUser);
 
@@ -32,11 +32,12 @@ public class UserServiceImplement implements UserService {
     @Override
     public GenericResponseDto removeUserById(Long id) {
 
-        User user = userRepository.getUser(id);
+        User user = userRepository.findById(id).orElse(null);
         GenericResponseDto genericResponseDto = new GenericResponseDto();
         if (user != null) {
             String name = user.getName();
-            userRepository.removeUser(user.getId());
+            userRepository.delete(user);
+            // we can also use deleteById(id) here That is a industry standard
 
             genericResponseDto.setSuccess(true);
 
@@ -56,7 +57,7 @@ public class UserServiceImplement implements UserService {
 
         User user =  mapUserRequestDtoToUser(userRequestDto);
 
-        User savedUser = userRepository.addUser(user);
+        User savedUser = userRepository.save(user);
 
         return mapUserToUserResponseDto(savedUser);
 
@@ -65,13 +66,19 @@ public class UserServiceImplement implements UserService {
     @Override
     public UserResponseDto getUserById(Long id) {
 
-        return mapUserToUserResponseDto(userRepository.getUser(id));
+        User user = userRepository.findById(id).orElse(null);
+
+        if (user == null) {
+            return null; // OR throw exception OR custom response
+        }
+
+        return mapUserToUserResponseDto(user);
 
     }
 
     @Override
     public List<UserResponseDto> getAllUser() {
-        List<User> userList = userRepository.getAllUser();
+        List<User> userList = userRepository.findAll();
         List<UserResponseDto> userResponseDtoList = new LinkedList<>();
 
         for (User user : userList) {
