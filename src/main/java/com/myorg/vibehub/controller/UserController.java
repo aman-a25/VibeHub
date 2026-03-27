@@ -6,6 +6,7 @@ import com.myorg.vibehub.dto.response.UserResponseDto;
 import com.myorg.vibehub.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,13 +21,24 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserResponseDto> registerUser(@RequestBody UserRequestDto userRequestDto) {
 
-        return new ResponseEntity<>(userService.addUser(userRequestDto),HttpStatusCode.valueOf(201));
+        UserResponseDto userResponseDto = userService.addUser(userRequestDto);
+
+        if (userResponseDto != null) {
+            return new ResponseEntity<>(userResponseDto, HttpStatusCode.valueOf(201));
+        }else{
+            return new ResponseEntity<>(HttpStatus.valueOf(400));
+        }
 
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDto> getUser(@PathVariable Long id) {
-        return new ResponseEntity<>(userService.getUserById(id),HttpStatusCode.valueOf(200));
+        UserResponseDto response = userService.getUserById(id);
+        if (response != null) {
+            return new ResponseEntity<>(response, HttpStatusCode.valueOf(200));
+        }else {
+            return new ResponseEntity<>(HttpStatus.valueOf(404));
+        }
     }
 
     @GetMapping
@@ -36,12 +48,27 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<UserResponseDto> updateUser(@RequestBody UserRequestDto userRequestDto , @PathVariable Long id) {
-        return new ResponseEntity<>(userService.updateUser(id , userRequestDto),HttpStatusCode.valueOf(200));
+
+        UserResponseDto response = userService.updateUser(id , userRequestDto);
+
+        if (response != null) {
+            return new ResponseEntity<>(response, HttpStatusCode.valueOf(200));
+
+        }else  {
+            return new ResponseEntity<>(HttpStatus.valueOf(404));
+        }
     }
 
     @DeleteMapping
     public ResponseEntity<GenericResponseDto> deleteUser(@RequestParam Long id) {
-        return new ResponseEntity<>(userService.removeUserById(id), HttpStatusCode.valueOf(200));
+
+        GenericResponseDto response = userService.removeUserById(id);
+
+        if (response.getSuccess()) {
+            return new ResponseEntity<>(response, HttpStatusCode.valueOf(200));
+        }else  {
+            return new ResponseEntity<>(response, HttpStatus.valueOf(404));
+        }
     }
 
 }
