@@ -31,8 +31,8 @@ public class UserController {
 
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDto> getUser(@PathVariable Long id) {
+    @GetMapping("/search/{id}")
+    public ResponseEntity<UserResponseDto> getUserById(@PathVariable Long id) {
         UserResponseDto response = userService.getUserById(id);
         if (response != null) {
             return new ResponseEntity<>(response, HttpStatusCode.valueOf(200));
@@ -41,8 +41,8 @@ public class UserController {
         }
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<UserResponseDto> getUser(@RequestParam String userName) {
+    @GetMapping("/search/username")
+    public ResponseEntity<UserResponseDto> getUserByUserName(@RequestParam String userName) {
         UserResponseDto response = userService.getUserByUsername(userName);
         if (response != null) {
             return new ResponseEntity<>(response, HttpStatusCode.valueOf(200));
@@ -50,6 +50,13 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.valueOf(404));
         }
     }
+
+    @GetMapping("/search/name")
+    public ResponseEntity<List<UserResponseDto>> getUserByName(@RequestParam String Name) {
+        return new ResponseEntity<>(userService.getAllUser(), HttpStatusCode.valueOf(200));
+    }
+
+
 
     @GetMapping
     public ResponseEntity<List<UserResponseDto>> getAllUser() {

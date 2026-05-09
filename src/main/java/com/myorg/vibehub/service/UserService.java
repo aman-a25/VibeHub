@@ -16,4 +16,6 @@ public interface UserService {
 
     // custom finder methods
     UserResponseDto getUserByUsername(String username);
+    List<UserResponseDto> getUserByName(String name);
+
 }

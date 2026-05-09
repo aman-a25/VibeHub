@@ -102,6 +102,14 @@ public class UserServiceImplement implements UserService {
         }
     }
 
+    @Override
+    public List<UserResponseDto> getUserByName(String name) {
+        List<User> userList = userRepository.findByName(name);
+
+        return mapListOfUserToListOfUserResponseDto(userList);
+
+    }
+
     //helper methods
     // Map User to UserResponseDto
     private UserResponseDto mapUserToUserResponseDto(User user) {
@@ -132,5 +140,15 @@ public class UserServiceImplement implements UserService {
 
         return user;
 
+    }
+
+    //Map List<User> to UserResponseDTO
+    private List<UserResponseDto> mapListOfUserToListOfUserResponseDto(List<User> userList) {
+
+        List<UserResponseDto> userResponseDtoList = new LinkedList<>();
+        for (User user : userList) {
+            userResponseDtoList.add(mapUserToUserResponseDto(user));
+        }
+        return userResponseDtoList;
     }
 }
