@@ -41,6 +41,16 @@ public class UserController {
         }
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<UserResponseDto> getUser(@RequestParam String userName) {
+        UserResponseDto response = userService.getUserByUsername(userName);
+        if (response != null) {
+            return new ResponseEntity<>(response, HttpStatusCode.valueOf(200));
+        }else {
+            return new ResponseEntity<>(HttpStatus.valueOf(404));
+        }
+    }
+
     @GetMapping
     public ResponseEntity<List<UserResponseDto>> getAllUser() {
         return new ResponseEntity<>(userService.getAllUser(), HttpStatusCode.valueOf(200));

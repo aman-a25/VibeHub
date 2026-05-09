@@ -92,6 +92,16 @@ public class UserServiceImplement implements UserService {
         return userResponseDtoList;
     }
 
+    @Override
+    public UserResponseDto getUserByUsername(String username) {
+        User user = userRepository.findByUserName(username).orElse(null);
+        if (user == null) {
+            return null;
+        }else {
+            return mapUserToUserResponseDto(user);
+        }
+    }
+
     //helper methods
     // Map User to UserResponseDto
     private UserResponseDto mapUserToUserResponseDto(User user) {

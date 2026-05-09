@@ -13,4 +13,7 @@ public interface UserService {
     List<UserResponseDto> getAllUser();
     UserResponseDto updateUser(Long id,UserRequestDto userRequestDto);
     GenericResponseDto removeUserById(Long id);
+
+    // custom finder methods
+    UserResponseDto getUserByUsername(String username);
 }
