@@ -1,5 +1,5 @@
 package com.myorg.vibehub.repository;
-import com.myorg.vibehub.dto.response.UserResponseDto;
+import com.myorg.vibehub.enums.Gender;
 import com.myorg.vibehub.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -33,12 +33,22 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     // The previous line was almost correct but
     // it handles exception on repository layer
-    // and that is something that we don't need
+    // and that is something that we don't need Who's recommended
 
     Optional<User> findByUserName (String username);
 
-    //find by name
+    //find by name with like operator
 
-    List<User> findByName (String name);
+    List<User> findByNameContaining(String name);
+
+    List<User> findByNameContainingAndGender(String name , Gender gender);
+    // First of all here we are concatenating two queries
+    // basically find object of Us where the name contains the given string and the Gender is as given
+
+    // But there is a important point to be noticed Gender was an enum in our entire project but now we are treating it as string
+    // The reason is simply that Hibernate does not understands or works with enums so we have to convert them into String
+
+
+
 
 }

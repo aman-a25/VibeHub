@@ -3,6 +3,7 @@ package com.myorg.vibehub.service;
 import com.myorg.vibehub.dto.request.UserRequestDto;
 import com.myorg.vibehub.dto.response.GenericResponseDto;
 import com.myorg.vibehub.dto.response.UserResponseDto;
+import com.myorg.vibehub.enums.Gender;
 import com.myorg.vibehub.model.User;
 import com.myorg.vibehub.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,10 +105,17 @@ public class UserServiceImplement implements UserService {
 
     @Override
     public List<UserResponseDto> getUserByName(String name) {
-        List<User> userList = userRepository.findByName(name);
+        List<User> userList = userRepository.findByNameContaining(name);
 
         return mapListOfUserToListOfUserResponseDto(userList);
 
+    }
+
+    @Override
+    public List<UserResponseDto> getUserByNameAndGender(String name, Gender gender) {
+        List<User> userList = userRepository.findByNameContainingAndGender(name, gender);
+
+        return mapListOfUserToListOfUserResponseDto(userList);
     }
 
     //helper methods

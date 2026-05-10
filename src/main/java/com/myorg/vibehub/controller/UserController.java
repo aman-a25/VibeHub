@@ -3,6 +3,7 @@ package com.myorg.vibehub.controller;
 import com.myorg.vibehub.dto.request.UserRequestDto;
 import com.myorg.vibehub.dto.response.GenericResponseDto;
 import com.myorg.vibehub.dto.response.UserResponseDto;
+import com.myorg.vibehub.enums.Gender;
 import com.myorg.vibehub.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
@@ -51,9 +52,15 @@ public class UserController {
         }
     }
 
-    @GetMapping("/search/name/{name}")
+    @GetMapping("/search/name/{Name}")
     public ResponseEntity<List<UserResponseDto>> getUserByName(@PathVariable String Name) {
-        return new ResponseEntity<>(userService.getAllUser(), HttpStatusCode.valueOf(200));
+        return new ResponseEntity<>(userService.getUserByName(Name), HttpStatusCode.valueOf(200));
+    }
+
+
+    @GetMapping("/search/nameandgender")
+    public ResponseEntity<List<UserResponseDto>> getUserByNameAndGender(@RequestParam String name , @RequestParam Gender gender) {
+        return new ResponseEntity<>(userService.getUserByNameAndGender(name , gender), HttpStatusCode.valueOf(200));
     }
 
 
