@@ -68,4 +68,12 @@ public interface UserRepository extends JpaRepository<User,Long> {
     )
     List<User> findByNameAndGender(@Param("name") String name,
                                    @Param("gender") Gender gender);
+
+    // HOMEWORK
+    // people who have @gmail.com in the end of there Emailid
+        @Query(
+                "SELECT q FROM User q WHERE Q.email LIKE %'@gmail.com'"
+        )
+    List<User> findByEmail();
 }
+

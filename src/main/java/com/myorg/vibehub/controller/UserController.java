@@ -70,6 +70,11 @@ public class UserController {
         return new ResponseEntity<>(userService.getAllUser(), HttpStatusCode.valueOf(200));
     }
 
+    @GetMapping("/search/email/@gmail")
+    public ResponseEntity<List<UserResponseDto>> getUserByEmail() {
+        return new ResponseEntity<>(userService.getUserWithGmailEmail(), HttpStatusCode.valueOf(200));
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<UserResponseDto> updateUser(@RequestBody UserRequestDto userRequestDto , @PathVariable Long id) {
 

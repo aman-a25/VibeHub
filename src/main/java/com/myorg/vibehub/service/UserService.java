@@ -19,5 +19,6 @@ public interface UserService {
     UserResponseDto getUserByUsername(String username);
     List<UserResponseDto> getUserByName(String name);
     List<UserResponseDto> getUserByNameAndGender(String name, Gender gender);
+    List<UserResponseDto> getUserWithGmailEmail();
 
 }

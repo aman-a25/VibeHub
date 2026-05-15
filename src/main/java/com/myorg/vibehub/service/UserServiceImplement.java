@@ -118,6 +118,11 @@ public class UserServiceImplement implements UserService {
         return mapListOfUserToListOfUserResponseDto(userList);
     }
 
+    @Override
+    public List<UserResponseDto> getUserWithGmailEmail() {
+        return mapListOfUserToListOfUserResponseDto(userRepository.findByEmail());
+    }
+
     //helper methods
     // Map User to UserResponseDto
     private UserResponseDto mapUserToUserResponseDto(User user) {
