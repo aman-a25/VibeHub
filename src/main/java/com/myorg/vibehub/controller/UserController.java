@@ -70,9 +70,9 @@ public class UserController {
         return new ResponseEntity<>(userService.getAllUser(), HttpStatusCode.valueOf(200));
     }
 
-    @GetMapping("/search/email/@gmail")
-    public ResponseEntity<List<UserResponseDto>> getUserByEmail() {
-        return new ResponseEntity<>(userService.getUserWithGmailEmail(), HttpStatusCode.valueOf(200));
+    @GetMapping("/search/email/domain/{domain}")
+    public ResponseEntity<List<UserResponseDto>> getUserByEmail(@PathVariable String domain) {
+        return new ResponseEntity<>(userService.getUserWithGmailEmail(domain), HttpStatusCode.valueOf(200));
     }
 
     @PutMapping("/{id}")

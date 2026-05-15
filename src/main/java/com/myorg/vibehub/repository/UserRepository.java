@@ -52,28 +52,30 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
 // JPQL Java persistence Query Language
 
-//    // native sql query
-//    @Query(
-//            value = "SELECT*FROM users u WHERE u.name LIKE %:name% AND u.gender = :gender",
-//            nativeQuery = true
-//    )
-//    List<User> findByNameAndGender(@Param("name") String name,
-//                                   @Param("gender") Gender gender);
-//
+    // native sql query
+    @Query(
+            value = "SELECT*FROM users u " +
+                    "WHERE u.name LIKE CONCAT('%', :name, '%') AND u.gender = :gender",
+            nativeQuery = true
+    )
+    List<User> findByNameAndGender(@Param("name") String name,
+                                   @Param("gender") String gender);
+
 
 
     // now JPQL query for that exact sql query
-        @Query(
-            "SELECT u FROM User u WHERE u.name LIKE %:name% AND u.gender = :gender"
-    )
-    List<User> findByNameAndGender(@Param("name") String name,
-                                   @Param("gender") Gender gender);
+
+//        @Query(
+//            "SELECT u FROM User u WHERE u.name LIKE %:name% AND u.gender = :gender"
+//    )
+//    List<User> findByNameAndGender(@Param("name") String name,
+//                                   @Param("gender") Gender gender);
 
     // HOMEWORK
     // people who have @gmail.com in the end of there Emailid
         @Query(
-                "SELECT q FROM User q WHERE Q.email LIKE %'@gmail.com'"
+                "SELECT q FROM User q WHERE q.email LIKE %:domain"
         )
-    List<User> findByEmail();
+    List<User> findByEmail(@Param("domain")  String domain);
 }
 

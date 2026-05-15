@@ -113,14 +113,14 @@ public class UserServiceImplement implements UserService {
 
     @Override
     public List<UserResponseDto> getUserByNameAndGender(String name, Gender gender) {
-        List<User> userList = userRepository.findByNameAndGender(name, gender);
+        List<User> userList = userRepository.findByNameAndGender(name, gender.name());
 
         return mapListOfUserToListOfUserResponseDto(userList);
     }
 
     @Override
-    public List<UserResponseDto> getUserWithGmailEmail() {
-        return mapListOfUserToListOfUserResponseDto(userRepository.findByEmail());
+    public List<UserResponseDto> getUserWithGmailEmail(String domain) {
+        return mapListOfUserToListOfUserResponseDto(userRepository.findByEmail(domain));
     }
 
     //helper methods
