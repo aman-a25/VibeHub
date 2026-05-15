@@ -2,6 +2,8 @@ package com.myorg.vibehub.repository;
 import com.myorg.vibehub.enums.Gender;
 import com.myorg.vibehub.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -48,7 +50,22 @@ public interface UserRepository extends JpaRepository<User,Long> {
     // But there is a important point to be noticed Gender was an enum in our entire project but now we are treating it as string
     // The reason is simply that Hibernate does not understands or works with enums so we have to convert them into String
 
+// JPQL Java persistence Query Language
+
+//    // native sql query
+//    @Query(
+//            value = "SELECT*FROM users u WHERE u.name LIKE %:name% AND u.gender = :gender",
+//            nativeQuery = true
+//    )
+//    List<User> findByNameAndGender(@Param("name") String name,
+//                                   @Param("gender") Gender gender);
+//
 
 
-
+    // now JPQL query for that exact sql query
+        @Query(
+            "SELECT u FROM User u WHERE u.name LIKE %:name% AND u.gender = :gender"
+    )
+    List<User> findByNameAndGender(@Param("name") String name,
+                                   @Param("gender") Gender gender);
 }

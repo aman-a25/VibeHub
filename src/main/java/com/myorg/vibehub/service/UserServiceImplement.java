@@ -113,7 +113,7 @@ public class UserServiceImplement implements UserService {
 
     @Override
     public List<UserResponseDto> getUserByNameAndGender(String name, Gender gender) {
-        List<User> userList = userRepository.findByNameContainingAndGender(name, gender);
+        List<User> userList = userRepository.findByNameAndGender(name, gender);
 
         return mapListOfUserToListOfUserResponseDto(userList);
     }
