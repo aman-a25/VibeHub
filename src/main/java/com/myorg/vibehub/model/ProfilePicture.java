@@ -23,4 +23,7 @@ public class ProfilePicture {
 
     private String url;
     private String alternativeText;
+
+    @OneToOne
+    private User user;
 }

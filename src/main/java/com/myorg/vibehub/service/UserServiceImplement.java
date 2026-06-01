@@ -138,6 +138,7 @@ public class UserServiceImplement implements UserService {
     ProfilePicture profilePicture = new ProfilePicture();
     profilePicture.setUrl(profilePictureRequestDto.getUrl());
     profilePicture.setAlternativeText(user.getUserName() + "'s Profile Picture not found");
+    profilePicture.setUser(user);
 
     profilePicture = profilePictureReposetory.save(profilePicture);
 
