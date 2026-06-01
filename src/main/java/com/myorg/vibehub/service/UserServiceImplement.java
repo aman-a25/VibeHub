@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -146,6 +147,7 @@ public class UserServiceImplement implements UserService {
     GenericResponseDto genericResponseDto = new GenericResponseDto();
     genericResponseDto.setSuccess(true);
     genericResponseDto.setMessage("Profile Picture has been uploaded successfully");
+    genericResponseDto.setDetails(Map.of("profileID", user.getProfilePicture().getId()));
 
     return genericResponseDto;
     }
