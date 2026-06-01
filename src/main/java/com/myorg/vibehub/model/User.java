@@ -1,5 +1,6 @@
 package com.myorg.vibehub.model;
 
+import com.myorg.vibehub.dto.request.ProfilePictureRequestDto;
 import com.myorg.vibehub.enums.Gender;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -20,6 +21,9 @@ public class User {
     private String phoneNumber;
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @OneToOne
+    private ProfilePicture profilePicture;
 
 //    All the code below is actually the getter setters for the above data members, but we don't need these Gator setters because we are using project lombok'
 //

@@ -1,10 +1,13 @@
 package com.myorg.vibehub.service;
 
+import com.myorg.vibehub.dto.request.ProfilePictureRequestDto;
 import com.myorg.vibehub.dto.request.UserRequestDto;
 import com.myorg.vibehub.dto.response.GenericResponseDto;
 import com.myorg.vibehub.dto.response.UserResponseDto;
 import com.myorg.vibehub.enums.Gender;
+import com.myorg.vibehub.model.ProfilePicture;
 import com.myorg.vibehub.model.User;
+import com.myorg.vibehub.repository.ProfilePictureReposetory;
 import com.myorg.vibehub.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,9 @@ public class UserServiceImplement implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ProfilePictureReposetory profilePictureReposetory;
 
     @Override
     public UserResponseDto updateUser(Long id ,UserRequestDto userRequestDto) {
@@ -121,6 +127,27 @@ public class UserServiceImplement implements UserService {
     @Override
     public List<UserResponseDto> getUserWithGmailEmail(String domain) {
         return mapListOfUserToListOfUserResponseDto(userRepository.findByEmail(domain));
+    }
+
+    @Override
+    public GenericResponseDto uploadProfilePicture(Long userId, ProfilePictureRequestDto profilePictureRequestDto) {
+
+    User user = userRepository.findById(userId).orElse(null);
+
+    ProfilePicture profilePicture = new ProfilePicture();
+    profilePicture.setUrl(profilePictureRequestDto.getUrl());
+    profilePicture.setAlternativeText(user.getUserName() + "'s Profile Picture not found");
+
+    profilePicture = profilePictureReposetory.save(profilePicture);
+
+    user.setProfilePicture(profilePicture);
+    userRepository.save(user);
+
+    GenericResponseDto genericResponseDto = new GenericResponseDto();
+    genericResponseDto.setSuccess(true);
+    genericResponseDto.setMessage("Profile Picture has been uploaded successfully");
+
+    return genericResponseDto;
     }
 
     //helper methods

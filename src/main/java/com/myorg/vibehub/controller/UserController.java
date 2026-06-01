@@ -1,5 +1,6 @@
 package com.myorg.vibehub.controller;
 
+import com.myorg.vibehub.dto.request.ProfilePictureRequestDto;
 import com.myorg.vibehub.dto.request.UserRequestDto;
 import com.myorg.vibehub.dto.response.GenericResponseDto;
 import com.myorg.vibehub.dto.response.UserResponseDto;
@@ -30,6 +31,12 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.valueOf(400));
         }
 
+    }
+
+    @PostMapping("/profile-picture/{id}")
+    public ResponseEntity<GenericResponseDto> updateProfilePicture( @PathVariable Long id,@RequestBody ProfilePictureRequestDto profilePictureRequestDto ) {
+
+        return new ResponseEntity<>(userService.uploadProfilePicture(id , profilePictureRequestDto) , HttpStatusCode.valueOf(200));
     }
 
     @GetMapping("/search/id/{id}")
@@ -99,5 +106,7 @@ public class UserController {
             return new ResponseEntity<>(response, HttpStatus.valueOf(404));
         }
     }
+
+
 
 }

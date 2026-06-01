@@ -1,9 +1,11 @@
 package com.myorg.vibehub.service;
 
+import com.myorg.vibehub.dto.request.ProfilePictureRequestDto;
 import com.myorg.vibehub.dto.request.UserRequestDto;
 import com.myorg.vibehub.dto.response.GenericResponseDto;
 import com.myorg.vibehub.dto.response.UserResponseDto;
 import com.myorg.vibehub.enums.Gender;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -20,5 +22,8 @@ public interface UserService {
     List<UserResponseDto> getUserByName(String name);
     List<UserResponseDto> getUserByNameAndGender(String name, Gender gender);
     List<UserResponseDto> getUserWithGmailEmail(String domain);
+
+    //profile picture handling
+    GenericResponseDto uploadProfilePicture(Long userId, ProfilePictureRequestDto profilePictureRequestDto);
 
 }
