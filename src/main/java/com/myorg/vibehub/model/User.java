@@ -22,8 +22,15 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @OneToOne
+    @OneToOne(mappedBy = "user")
     private ProfilePicture profilePicture;
+    // Here mapping by user basically user is the name of the variable profilePicture model
+    // This tells system that user is parent and it is being mapped one to one two profile picture by that one variable or attribute user
+    // Now something very strange will happen
+    //  in User table there will be no column for profile picture at all
+    //  Why because that was a redundant data it was not needed at all
+
+
 
 //    All the code below is actually the getter setters for the above data members, but we don't need these Gator setters because we are using project lombok'
 //
