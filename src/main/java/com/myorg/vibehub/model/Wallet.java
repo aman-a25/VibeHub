@@ -1,5 +1,6 @@
 package com.myorg.vibehub.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,6 +16,7 @@ public class Wallet {
     private Double balance;
 
     @OneToOne
+    @JsonIgnore
     private User user;
 
 }

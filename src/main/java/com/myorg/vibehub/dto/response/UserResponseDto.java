@@ -1,6 +1,8 @@
 package com.myorg.vibehub.dto.response;
 
 import com.myorg.vibehub.enums.Gender;
+import com.myorg.vibehub.model.ProfilePicture;
+import com.myorg.vibehub.model.Wallet;
 import lombok.Data;
 
 @Data
@@ -13,4 +15,6 @@ public class UserResponseDto {
     private String email;
     private String phoneNumber;
     private Gender gender;
+    private ProfilePicture profilePicture;
+    private Wallet wallet;
 }

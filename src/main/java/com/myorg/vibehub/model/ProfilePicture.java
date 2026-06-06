@@ -1,5 +1,6 @@
 package com.myorg.vibehub.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.myorg.vibehub.enums.Gender;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -25,5 +26,6 @@ public class ProfilePicture {
     private String alternativeText;
 
     @OneToOne
+    @JsonIgnore
     private User user;
 }

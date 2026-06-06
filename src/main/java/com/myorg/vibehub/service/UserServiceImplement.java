@@ -176,6 +176,14 @@ public class UserServiceImplement implements UserService {
         userResponseDto.setPhoneNumber(user.getPhoneNumber());
         userResponseDto.setGender(user.getGender());
 
+
+//        userResponseDto.setWallet(user.getWallet());
+//        userResponseDto.setProfilePicture(user.getProfilePicture());
+
+        // There is a problem with the above mapping which is that when we are retrieving the wallet for user
+        // The wallet for user also has a model of and that model of user also the wallet again basically it triggers an infinite recursion
+
+        // to solve this we use JsonIgnore annotation on Non dominant entity on its foreign key
         return userResponseDto;
 
     }
