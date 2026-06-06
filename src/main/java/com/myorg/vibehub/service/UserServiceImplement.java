@@ -7,8 +7,10 @@ import com.myorg.vibehub.dto.response.UserResponseDto;
 import com.myorg.vibehub.enums.Gender;
 import com.myorg.vibehub.model.ProfilePicture;
 import com.myorg.vibehub.model.User;
+import com.myorg.vibehub.model.Wallet;
 import com.myorg.vibehub.repository.ProfilePictureReposetory;
 import com.myorg.vibehub.repository.UserRepository;
+import com.myorg.vibehub.repository.WalletReposetory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.LinkedList;
@@ -25,6 +27,8 @@ public class UserServiceImplement implements UserService {
     @Autowired
     private ProfilePictureReposetory profilePictureReposetory;
 
+    @Autowired
+    private WalletReposetory walletReposetory;
     @Override
     public UserResponseDto updateUser(Long id ,UserRequestDto userRequestDto) {
 
@@ -65,6 +69,12 @@ public class UserServiceImplement implements UserService {
 
         User user =  mapUserRequestDtoToUser(userRequestDto);
 
+
+        Wallet wallet = new Wallet();
+        wallet.setBalance(0D);
+        wallet.setUser(user);
+
+        user.setWallet(wallet);
         User savedUser = userRepository.save(user);
 
         return mapUserToUserResponseDto(savedUser);
