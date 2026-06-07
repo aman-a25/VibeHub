@@ -22,7 +22,7 @@ public class Group {
     @OneToOne(mappedBy ="group",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private String groupProfilePic;
 
-    @ManyToMany(mappedBy = "groups" )
+    @ManyToMany(mappedBy = "groupss" )
     @JsonIgnore
     private List<User> users;
 }

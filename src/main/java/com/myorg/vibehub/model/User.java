@@ -44,7 +44,7 @@ public class User {
 
 
     @ManyToMany(mappedBy = "users" ,  cascade = CascadeType.DETACH , fetch = FetchType.LAZY)
-    private List<Group> groups;
+    private List<Group> groupss;
 
 
 
