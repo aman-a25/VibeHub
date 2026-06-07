@@ -184,6 +184,11 @@ public class UserServiceImplement implements UserService {
         // The wallet for user also has a model of and that model of user also the wallet again basically it triggers an infinite recursion
 
         // to solve this we use JsonIgnore annotation on Non dominant entity on its foreign key
+
+        userResponseDto.setWallet(user.getWallet());
+        userResponseDto.setProfilePicture(user.getProfilePicture());
+
+//        Now because we have added the annotation the same code will work
         return userResponseDto;
 
     }
