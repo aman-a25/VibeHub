@@ -1,8 +1,7 @@
-Uh post package com.myorg.vibehub.model;
+package com.myorg.vibehub.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Data;
 
 @Entity

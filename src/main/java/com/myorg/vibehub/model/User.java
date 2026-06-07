@@ -1,15 +1,14 @@
 package com.myorg.vibehub.model;
 
+import com.myorg.vibehub.dto.request.ProfilePictureRequestDto;
 import com.myorg.vibehub.enums.Gender;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 @Entity
 @Table(name = "users") //But here it is because the name of the class is User and the name of the table is Users (plural)
-public class user one too many post post post service post post kalamazoo User {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +36,7 @@ public class user one too many post post post service post post kalamazoo User {
     @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL ,  fetch = FetchType.LAZY)
 //    private Post post;
     // Because the mapping is one too many as the user is going to store more than one post so we need list of post
-    private List<Post> post;
+    private Post post;
 
 
 
