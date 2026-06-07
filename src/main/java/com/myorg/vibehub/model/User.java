@@ -43,7 +43,7 @@ public class User {
     private Country country;
 
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "users" ,  cascade = CascadeType.DETACH , fetch = FetchType.LAZY)
     private List<Group> groups;
 
 
