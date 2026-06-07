@@ -39,6 +39,13 @@ public class User {
     // Because the mapping is one too many as the user is going to store more than one post so we need list of post
     private List<Post> post;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Country country;
+
+
+    @ManyToMany
+    private List<Group> groups;
+
 
 
 //    All the code below is actually the getter setters for the above data members, but we don't need these Gator setters because we are using project lombok'
