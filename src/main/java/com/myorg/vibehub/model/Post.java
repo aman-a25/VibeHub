@@ -18,7 +18,7 @@ public class Post {
     private Long CommentCount;
     private Long ShareCount;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private User user;
 }

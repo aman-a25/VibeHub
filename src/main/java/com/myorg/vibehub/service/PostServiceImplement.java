@@ -7,11 +7,13 @@ import com.myorg.vibehub.model.Post;
 import com.myorg.vibehub.repository.PostRepository;
 import com.myorg.vibehub.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+@Service
 public class PostServiceImplement implements PostService{
 
     @Autowired
@@ -37,10 +39,14 @@ public class PostServiceImplement implements PostService{
     @Override
     public PostResponseDto updatePost(Long id ,PostRequestDto postRequestDto) {
 
-        Post post = mapPostRequestDtoToPost(postRequestDto);
-        post.setId(id);
-        postRepository.save(post);
-        return (mapPostToPostResponseDto(post));
+        Post existingPost =
+                postRepository.findById(id)
+                        .orElseThrow(NullPointerException::new);
+
+        existingPost.setCaption(postRequestDto.getCaption());
+        existingPost.setUrl(postRequestDto.getUrl());
+        return (mapPostToPostResponseDto(existingPost));
+
 
     }
 
@@ -92,11 +98,12 @@ public class PostServiceImplement implements PostService{
         PostResponseDto postResponseDto = new PostResponseDto();
 
         postResponseDto.setId(post.getId());
-        postResponseDto.setUser(post.getUser());
+        postResponseDto.setUserId(post.getUser().getId());
         postResponseDto.setCaption(post.getCaption());
         postResponseDto.setCommentCount(post.getCommentCount());
         postResponseDto.setLikeCount(post.getLikeCount());
         postResponseDto.setShareCount(post.getShareCount());
+        postResponseDto.setUrl(post.getUrl());
 
         return postResponseDto;
     }

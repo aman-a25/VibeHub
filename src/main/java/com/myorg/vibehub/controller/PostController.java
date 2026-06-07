@@ -37,8 +37,8 @@ public class PostController {
         return new ResponseEntity<>(postResponseDto, HttpStatusCode.valueOf(200));
     }
 
-    @DeleteMapping()
-    public ResponseEntity<GenericResponseDto> deletePost(@RequestParam Long id){
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<GenericResponseDto> deletePost(@PathVariable Long id){
 
         GenericResponseDto response = postService.deletePostById(id);
 

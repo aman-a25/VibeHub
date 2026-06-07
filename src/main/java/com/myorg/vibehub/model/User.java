@@ -1,9 +1,10 @@
 package com.myorg.vibehub.model;
 
-import com.myorg.vibehub.dto.request.ProfilePictureRequestDto;
 import com.myorg.vibehub.enums.Gender;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @Entity
@@ -25,7 +26,7 @@ public class User {
     @OneToOne(mappedBy = "user" , cascade = CascadeType.ALL)
     private ProfilePicture profilePicture;
     // Here mapping by user basically user is the name of the variable profilePicture model
-    // This tells system that user is parent and it is being mapped one to one two profile picture by that one variable or attribute user
+    // This tells system that user is parent ,and it is being mapped one to one two profile picture by that one variable or attribute user
     // Now something very strange will happen
     //  in User table there will be no column for profile picture at all
     //  Why because that was a redundant data it was not needed at all
@@ -36,7 +37,7 @@ public class User {
     @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL ,  fetch = FetchType.LAZY)
 //    private Post post;
     // Because the mapping is one too many as the user is going to store more than one post so we need list of post
-    private Post post;
+    private List<Post> post;
 
 
 
