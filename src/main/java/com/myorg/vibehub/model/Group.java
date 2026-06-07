@@ -23,6 +23,11 @@ public class Group {
     private String groupProfilePic;
 
     @ManyToMany(mappedBy = "groupss" )
+    @JoinTable(
+            name = "user_group",
+            joinColumns = @JoinColumn(name = "group_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
     @JsonIgnore
     private List<User> users;
 }
