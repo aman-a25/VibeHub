@@ -4,6 +4,7 @@ import com.myorg.vibehub.dto.request.PostRequestDto;
 import com.myorg.vibehub.dto.response.GenericResponseDto;
 import com.myorg.vibehub.dto.response.PostResponseDto;
 import com.myorg.vibehub.model.Post;
+import com.myorg.vibehub.model.User;
 import com.myorg.vibehub.repository.PostRepository;
 import com.myorg.vibehub.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,17 +24,29 @@ public class PostServiceImplement implements PostService{
     private UserRepository userRepository;
 
     @Override
-    public PostResponseDto addPost(PostRequestDto postRequestDto) {
+    public GenericResponseDto addPost(PostRequestDto postRequestDto) {
 
+        User user = userRepository.findById( postRequestDto.getUserId()).orElse(null);
+
+        GenericResponseDto responseDto = new GenericResponseDto();
+
+        if(user==null){
+            responseDto.setSuccess(false);
+            responseDto.setMessage("User not found");
+            return responseDto;
+        }
+
+        if(postRequestDto.getUserId()==null){
+            responseDto.setSuccess(false);
+            responseDto.setMessage("Caption can't be empty");
+            return responseDto;
+        }
         Post post = mapPostRequestDtoToPost(postRequestDto);
 
-        post.setShareCount(0L);
-        post.setLikeCount(0L);
-        post.setCommentCount(0L);
-
-        postRepository.save(post);
-
-        return (mapPostToPostResponseDto(post));
+        responseDto.setSuccess(true);
+        responseDto.setMessage("Post added");
+        responseDto.setDetails(postRepository.save(post));
+        return responseDto;
     }
 
     @Override

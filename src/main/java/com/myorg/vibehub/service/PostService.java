@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PostService {
 
-    PostResponseDto addPost(PostRequestDto postRequestDto);
+    GenericResponseDto addPost(PostRequestDto postRequestDto);
     PostResponseDto updatePost(Long id ,PostRequestDto postRequestDto);
     GenericResponseDto deletePostById(Long id);
     PostResponseDto getPostById(Long id);

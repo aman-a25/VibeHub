@@ -14,9 +14,9 @@ public class Post {
     private Long id;
     private String url;
     private String Caption ;
-    private Long LikeCount;
-    private Long CommentCount;
-    private Long ShareCount;
+    private Long LikeCount = 0L;
+    private Long CommentCount = 0L;
+    private Long ShareCount = 0L;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
