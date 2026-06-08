@@ -20,13 +20,14 @@ public class PostController {
     private PostService postService;
 
     @PostMapping()
-    public ResponseEntity<PostResponseDto> addPost(@RequestBody PostRequestDto postRequestDto){
-        PostResponseDto postResponseDto = postService.addPost(postRequestDto);
+    public ResponseEntity<GenericResponseDto> addPost(@RequestBody PostRequestDto postRequestDto){
+        GenericResponseDto ResponseDto = postService.addPost(postRequestDto);
 
-        if (postResponseDto != null) {
-            return new ResponseEntity<>(postResponseDto, HttpStatusCode.valueOf(201));
-        }else  {
-            return new ResponseEntity<>(HttpStatus.valueOf(400));
+        if(ResponseDto.getSuccess() == true) {
+            return new ResponseEntity <> (ResponseDto ,HttpStatusCode.valueOf(200));
+        }
+        else  {
+            return new ResponseEntity <> (ResponseDto ,HttpStatusCode.valueOf(400));
         }
     }
 

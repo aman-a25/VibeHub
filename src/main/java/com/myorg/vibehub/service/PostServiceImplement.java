@@ -53,8 +53,8 @@ public class PostServiceImplement implements PostService{
     public PostResponseDto updatePost(Long id ,PostRequestDto postRequestDto) {
 
         Post existingPost =
-                postRepository.findById(id)
-                        .orElseThrow(NullPointerException::new);
+            postRepository.findById(id)
+                .orElseThrow(NullPointerException::new);
 
         existingPost.setCaption(postRequestDto.getCaption());
         existingPost.setUrl(postRequestDto.getUrl());
