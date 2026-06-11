@@ -9,20 +9,20 @@ import java.util.UUID;
 
 @Data
 @Entity
-@Table(name = "groups")
+@Table(name = "user_groups")
 public class Group {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     private String groupName;
     private String groupDescription;
 
     @OneToOne(mappedBy ="group",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private String groupProfilePic;
+    private ProfilePicture groupProfilePic;
 
-    @ManyToMany(mappedBy = "groupss" )
+    @OneToMany
     @JoinTable(
             name = "user_group",
             joinColumns = @JoinColumn(name = "group_id"),

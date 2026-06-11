@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.myorg.vibehub.enums.Gender;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.web.service.registry.HttpServiceGroupConfigurer;
 
 import java.util.UUID;
 
@@ -28,4 +29,8 @@ public class ProfilePicture {
     @OneToOne
     @JsonIgnore
     private User user;
+
+    @OneToOne
+    @JsonIgnore
+    private Group group;
 }
