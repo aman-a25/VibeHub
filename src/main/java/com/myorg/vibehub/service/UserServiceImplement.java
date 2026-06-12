@@ -199,6 +199,9 @@ public class UserServiceImplement implements UserService {
         userResponseDto.setProfilePicture(user.getProfilePicture());
 
 //        Now because we have added the annotation the same code will work
+
+        userResponseDto.setCountry(user.getCountry());
+
         return userResponseDto;
 
     }
