@@ -8,9 +8,9 @@ import com.myorg.vibehub.enums.Gender;
 import com.myorg.vibehub.model.ProfilePicture;
 import com.myorg.vibehub.model.User;
 import com.myorg.vibehub.model.Wallet;
+import com.myorg.vibehub.repository.CountryRepository;
 import com.myorg.vibehub.repository.ProfilePictureReposetory;
 import com.myorg.vibehub.repository.UserRepository;
-import com.myorg.vibehub.repository.WalletReposetory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.LinkedList;
@@ -28,7 +28,8 @@ public class UserServiceImplement implements UserService {
     private ProfilePictureReposetory profilePictureReposetory;
 
     @Autowired
-    private WalletReposetory walletReposetory;
+    private CountryRepository countryRepository;
+
     @Override
     public UserResponseDto updateUser(Long id ,UserRequestDto userRequestDto) {
 
@@ -143,24 +144,33 @@ public class UserServiceImplement implements UserService {
     @Override
     public GenericResponseDto uploadProfilePicture(Long userId, ProfilePictureRequestDto profilePictureRequestDto) {
 
-    User user = userRepository.findById(userId).orElse(null);
+        GenericResponseDto genericResponseDto = new GenericResponseDto();
 
-    ProfilePicture profilePicture = new ProfilePicture();
-    profilePicture.setUrl(profilePictureRequestDto.getUrl());
-    profilePicture.setAlternativeText(user.getUserName() + "'s Profile Picture not found");
-    profilePicture.setUser(user);
+        User user = userRepository.findById(userId).orElse(null);
 
-    profilePicture = profilePictureReposetory.save(profilePicture);
+        if (user == null) {
 
-    user.setProfilePicture(profilePicture);
-    userRepository.save(user);
+            genericResponseDto.setSuccess(false);
+            genericResponseDto.setMessage("User not found");
 
-    GenericResponseDto genericResponseDto = new GenericResponseDto();
-    genericResponseDto.setSuccess(true);
-    genericResponseDto.setMessage("Profile Picture has been uploaded successfully");
-    genericResponseDto.setDetails(Map.of("profileID", user.getProfilePicture().getId()));
+            return  genericResponseDto;
+        }
 
-    return genericResponseDto;
+        ProfilePicture profilePicture = new ProfilePicture();
+        profilePicture.setUrl(profilePictureRequestDto.getUrl());
+        profilePicture.setAlternativeText(user.getUserName() + "'s Profile Picture not found");
+        profilePicture.setUser(user);
+
+        profilePicture = profilePictureReposetory.save(profilePicture);
+
+        user.setProfilePicture(profilePicture);
+        userRepository.save(user);
+
+        genericResponseDto.setSuccess(true);
+        genericResponseDto.setMessage("Profile Picture has been uploaded successfully");
+        genericResponseDto.setDetails(Map.of("profileID", user.getProfilePicture().getId()));
+
+        return genericResponseDto;
     }
 
     //helper methods
@@ -183,7 +193,7 @@ public class UserServiceImplement implements UserService {
         // There is a problem with the above mapping which is that when we are retrieving the wallet for user
         // The wallet for user also has a model of and that model of user also the wallet again basically it triggers an infinite recursion
 
-        // to solve this we use JsonIgnore annotation on Non dominant entity on its foreign key
+        // to solve this we use JsonIgnore annotation on Non-dominant entity on its foreign key
 
         userResponseDto.setWallet(user.getWallet());
         userResponseDto.setProfilePicture(user.getProfilePicture());
@@ -203,6 +213,7 @@ public class UserServiceImplement implements UserService {
         user.setEmail(userRequestDto.getEmail());
         user.setPhoneNumber(userRequestDto.getPhoneNumber());
         user.setGender(userRequestDto.getGender());
+        user.setCountry(countryRepository.getReferenceById( userRequestDto.getCountryId()));
 
         return user;
 

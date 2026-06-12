@@ -14,4 +14,5 @@ public class UserRequestDto {
     private String email;
     private String phoneNumber;
     private Gender gender;
+    private Long countryId;
 }
